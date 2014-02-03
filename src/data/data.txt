@@ -1,0 +1,68 @@
+INSERT INTO estado_civil(estado_civil_id, descrip) VALUES(1, 'Casado');
+INSERT INTO estado_civil(estado_civil_id, descrip) VALUES(2, 'Soltero');
+INSERT INTO estado_civil(estado_civil_id, descrip) VALUES(3, 'Viudo');
+
+INSERT INTO sexo(sexo_id, descrip) VALUES(1, 'Femenino');
+INSERT INTO sexo(sexo_id, descrip) VALUES(2, 'Masculino');
+
+INSERT INTO tipo_doc(tipo_doc_id, descrip) VALUES(1, 'DNI');
+INSERT INTO tipo_doc(tipo_doc_id, descrip) VALUES(2, 'LC');
+INSERT INTO tipo_doc(tipo_doc_id, descrip) VALUES(3, 'LE');
+
+INSERT INTO instruccion(instruccion_id, descrip) VALUES(1, 'Primaria');
+INSERT INTO instruccion(instruccion_id, descrip) VALUES(2, 'Secundaria');
+INSERT INTO instruccion(instruccion_id, descrip) VALUES(3, 'Terciaria');
+INSERT INTO instruccion(instruccion_id, descrip) VALUES(4, 'Universitaria');
+
+INSERT INTO tipo_aspecto_personal(tipo_aspecto_personal_id, descrip) VALUES(1, 'Delgado');
+INSERT INTO tipo_aspecto_personal(tipo_aspecto_personal_id, descrip) VALUES(2, 'Mediano');
+INSERT INTO tipo_aspecto_personal(tipo_aspecto_personal_id, descrip) VALUES(3, 'Grueso');
+
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(1, 'PARAM_DIR_HUELLAS', 'C:/SGI/archivos/huellas');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(2, 'PARAM_DIR_SOLICITUDES', 'C:/SGI/archivos/solicitudes');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(6, 'PARAM_DIR_JASPER', 'C:/SGI/reportes/jasper');
+
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(9, 'PARAM_DEPENDENCIA_SOLICITUD_PROC_MJYS', 'Ministerio de Justicia y Seguridad de la Provincia de Buenos Aires');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(8, 'PARAM_DIRECCION_SOLICITUD_PROC_MJYS', 'Dirección de Registro de Antecedentes');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(4, 'PARAM_CARGO_SOLICITUD_PROC_MJYS', 'Director');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(5, 'PARAM_NOMBRE_SOLICITUD_PROC_MJYS', 'Comisario Inspector Eduardo Perez Rejón');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(3, 'PARAM_TEXTO_SOLICITUD_PROC_MJYS', 'Por medio del presente, me dirijo a usted en mi carácter de @cargo de @dependencia, a los fines de solicitarle tenga a bien proceder a la identificación y búsqueda de todo antecedente relacionado con la persona que dijo ser:');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(10, 'PARAM_TEXTO_FOOTER_SOLICITUD_PROC_MJYS', 'Sin otro particular, saludo a usted con la consideración más distinguida.');
+
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(7, 'PARAM_LIMITE_GRILLA', '40');
+
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(11, 'URL_WS_OPERADOR_VALIDO', 'http://dpdserver.dpic.sg.gba.gov.ar/webservices/share/ws_operador_valido.php');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(12, 'USR_WS_OPERADOR_VALIDO', 'wssgi');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(13, 'PSS_WS_OPERADOR_VALIDO', 'sgi789');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(14, 'ID_APP_WSO', '76');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(15, 'DIR_TEMP_ZIP', 'C:/SGI/archivos/temp');
+
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(1, 'PARAM_DIR_HUELLAS', '/home/jboss/PARAM_DIR_HUELLAS/');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(2, 'PARAM_DIR_SOLICITUDES', '/home/jboss/PARAM_DIR_SOLICITUDES');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(6, 'PARAM_DIR_JASPER', '/home/jboss/PARAM_DIR_JASPER');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(15, 'DIR_TEMP_ZIP', '/home/jboss/DIR_TEMP_ZIP/');
+
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(16, 'LEYENDA_SAVE_SOLICITUD', 'Se ha creado la solicitud con el numero @idSolicitud, este valor debe escribirlo en la Ficha Dactilar');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(17, 'LEYENDA_UPDATE_SOLICITUD', 'Se ha actualizado la solicitud con el numero @idSolicitud');
+INSERT INTO parametrizacion(parametrizacion_id, descrip, valor) VALUES(18, 'PARAM_DIR_IMAGE_REPORT', 'C:/SGI/reportes/images/');
+
+
+
+
+
+INSERT INTO estado_solicitud(estado_solicitud_id, descrip) VALUES(1, 'En edición');
+INSERT INTO estado_solicitud(estado_solicitud_id, descrip) VALUES(2, 'Finalizado OTIP');
+INSERT INTO estado_solicitud(estado_solicitud_id, descrip) VALUES(3, 'Firmado Procuración');
+INSERT INTO estado_solicitud(estado_solicitud_id, descrip) VALUES(4, 'Recepcionado MJyS');
+INSERT INTO estado_solicitud(estado_solicitud_id, descrip) VALUES(5, 'Finalizado MJyS');
+INSERT INTO estado_solicitud(estado_solicitud_id, descrip) VALUES(6, 'Finalizado');
+
+INSERT INTO fiscalia_general(fiscalia_general_id, nombre, lugar) VALUES(1, 'CENTRO DE ASISTENCIA A LA VÍCTIMA DESCENTRALIZADO CON SEDE EN FLORENCIO VARELA', 'Lomas de Zamora');
+INSERT INTO fiscalia_general(fiscalia_general_id, nombre, lugar) VALUES(2, 'FISCALIA GENERAL - Oficina de Archivo', 'Quilmes');
+INSERT INTO fiscalia_general(fiscalia_general_id, nombre, lugar) VALUES(3, 'Fiscalia General del departamento de Quilmes', 'Quilmes');
+INSERT INTO fiscalia_general(fiscalia_general_id, nombre, lugar) VALUES(4, 'Fiscalia General del departamento de Lomas de Zamora', 'Lomas de Zamora');
+
+INSERT INTO otip_fiscalia_general(otip_fiscalia_general_id, fiscalia_general_id) VALUES(1, 1);
+INSERT INTO otip_fiscalia_general(otip_fiscalia_general_id, fiscalia_general_id) VALUES(24500000004833, 1);
+INSERT INTO otip_fiscalia_general(otip_fiscalia_general_id, fiscalia_general_id) VALUES(24500000004834, 1);
+INSERT INTO otip_fiscalia_general(otip_fiscalia_general_id, fiscalia_general_id) VALUES(24500000004832, 1);

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 08/05/2012 00:04:43 by Hibernate Tools 3.2.0.b9 -->
+<hibernate-mapping>
+    <class name="base.Trazabi" table="Trazabi" schema="dbo" catalog="ComunSql">
+        <id name="nr" type="int">
+            <column name="nr" />
+            <generator class="assigned" />
+        </id>
+        <property name="articulo" type="string">
+            <column name="articulo" length="13" />
+        </property>
+        <property name="gtin" type="string">
+            <column name="GTIN" length="14" />
+        </property>
+        <property name="serieGtin" type="string">
+            <column name="SerieGtin" length="20" />
+        </property>
+        <property name="cant" type="java.lang.Float">
+            <column name="cant" precision="24" scale="0" />
+        </property>
+        <property name="exinr" type="java.lang.Integer">
+            <column name="exinr" />
+        </property>
+        <property name="nrlote" type="string">
+            <column name="nrlote" length="50" />
+        </property>
+        <property name="nrFacCompra" type="string">
+            <column name="NrFacCompra" length="15" />
+        </property>
+        <property name="nrRemCompra" type="string">
+            <column name="NrRemCompra" length="15" />
+        </property>
+        <property name="genteNr" type="java.lang.Integer">
+            <column name="GenteNr" />
+        </property>
+        <property name="vencimLote" type="string">
+            <column name="VencimLote" length="10" />
+        </property>
+        <property name="tipoIng" type="java.lang.Integer">
+            <column name="TipoIng" />
+        </property>
+        <property name="tipoSalida" type="java.lang.Integer">
+            <column name="TipoSalida" />
+        </property>
+        <property name="impreso" type="java.lang.Integer">
+            <column name="Impreso" />
+        </property>
+        <property name="unico" type="java.lang.Integer">
+            <column name="unico" />
+        </property>
+        <property name="sucursal" type="java.lang.Integer">
+            <column name="sucursal" />
+        </property>
+        <property name="codEventoIng" type="java.lang.Integer">
+            <column name="CodEventoIng" />
+        </property>
+        <property name="fechaIng" type="timestamp">
+            <column name="FechaIng" length="16" />
+        </property>
+        <property name="glnorigenIng" type="string">
+            <column name="GLNOrigenIng" length="20" />
+        </property>
+        <property name="cuitOrigenIng" type="string">
+            <column name="CuitOrigenIng" length="15" />
+        </property>
+        <property name="glndestinoIng" type="string">
+            <column name="GLNDestinoIng" length="20" />
+        </property>
+        <property name="cuitDestinoIng" type="string">
+            <column name="CuitDestinoIng" length="15" />
+        </property>
+        <property name="nrOpIng" type="java.lang.Integer">
+            <column name="NrOpIng" />
+        </property>
+        <property name="respuestaIngreso" type="string">
+            <column name="RespuestaIngreso" length="15" />
+        </property>
+        <property name="obserIng" type="string">
+            <column name="ObserIng" length="150" />
+        </property>
+        <property name="codEventoSal" type="java.lang.Integer">
+            <column name="CodEventoSal" />
+        </property>
+        <property name="fechaSalida" type="timestamp">
+            <column name="FechaSalida" length="16" />
+        </property>
+        <property name="glnorigenSal" type="string">
+            <column name="GLNOrigenSal" length="50" />
+        </property>
+        <property name="cuitOrigenSal" type="string">
+            <column name="CuitOrigenSal" length="15" />
+        </property>
+        <property name="glndestinoSal" type="string">
+            <column name="GLNDestinoSal" length="20" />
+        </property>
+        <property name="cuitDestinoSal" type="string">
+            <column name="CuitDestinoSal" length="15" />
+        </property>
+        <property name="respuestaSalida" type="string">
+            <column name="RespuestaSalida" length="15" />
+        </property>
+        <property name="obserEgr" type="string">
+            <column name="ObserEgr" length="150" />
+        </property>
+        <property name="nrOpEgr" type="java.lang.Integer">
+            <column name="NrOpEgr" />
+        </property>
+        <property name="nrRemitoPropio" type="string">
+            <column name="NrRemitoPropio" length="20" />
+        </property>
+        <property name="nrTransacSalida" type="java.lang.Integer">
+            <column name="NrTransacSalida" />
+        </property>
+        <property name="trazaObli" type="java.lang.Integer">
+            <column name="TrazaObli" />
+        </property>
+    </class>
+</hibernate-mapping>
