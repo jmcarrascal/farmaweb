@@ -7,39 +7,37 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.rmi.RemoteException;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Transient;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jmc.skweb.core.model.ArtMadre;
+import jmc.skweb.core.model.Domicilios;
 import jmc.skweb.core.model.ExiArt;
+import jmc.skweb.core.model.Fam;
+import jmc.skweb.core.model.Gente;
+import jmc.skweb.core.model.Items;
+import jmc.skweb.core.model.Paseban;
+import jmc.skweb.core.model.Stock;
+import jmc.skweb.core.model.SubFam;
+import jmc.skweb.core.model.TipoComprob;
+import jmc.skweb.core.model.Transac;
+import jmc.skweb.core.model.Usuario;
+import jmc.skweb.core.model.report.SaldoAcumulado;
+import jmc.skweb.core.model.report.TipoReporte;
 import jmc.skweb.core.model.shortEntities.GenteBasic;
 import jmc.skweb.core.model.traza.ObraSocial;
 import jmc.skweb.core.model.traza.Trazabi;
 import jmc.skweb.core.model.traza.TrazabiFarma;
 import jmc.skweb.core.model.traza.report.DatosTrazaWS;
-import jmc.skweb.core.model.Domicilios;
-import jmc.skweb.core.model.TipoComprob;
-import jmc.skweb.core.model.Fam;
-import jmc.skweb.core.model.Gente;
-import jmc.skweb.core.model.Items;
-import jmc.skweb.core.model.Paseban;
-import jmc.skweb.core.model.SubFam;
-import jmc.skweb.core.model.Transac;
-import jmc.skweb.core.model.Usuario;
-import jmc.skweb.core.model.Stock;
-import jmc.skweb.core.model.report.SaldoAcumulado;
-import jmc.skweb.core.model.report.TipoReporte;
 import jmc.skweb.core.service.ArticuloManager;
 import jmc.skweb.core.service.CuentaCorrienteManager;
 import jmc.skweb.core.service.ParametrizacionManager;
@@ -47,16 +45,13 @@ import jmc.skweb.core.service.ReporteadorPdfManager;
 import jmc.skweb.core.service.TesoreriaManager;
 import jmc.skweb.core.service.TransaccionManager;
 import jmc.skweb.core.service.UsuarioManager;
-import jmc.skweb.core.service.impl.ReporteadorPdfManagerImpl;
 import jmc.skweb.util.CallUrl;
 import jmc.skweb.util.Constants;
+import jmc.skweb.util.DateUtil;
 import jmc.skweb.util.FormatUtil;
 import jmc.skweb.util.email.Email;
-import jmc.skweb.util.email.SendEmailThread;
 
-import org.apache.batik.script.Window.GetURLHandler;
 import org.apache.struts2.ServletActionContext;
-
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -112,11 +107,23 @@ public class ServicesAction extends ActionSupport  {
 	private boolean porTransac = false;
 	private TrazabiFarma trazabiFarma;
 	private String nrStr;
+	private String fecha;
+	
 	
 	
 	
 	 
 	
+
+	public String getFecha() {
+		return fecha;
+	}
+
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
 
 	public String getNrStr() {
 		return nrStr;
@@ -758,7 +765,7 @@ public class ServicesAction extends ActionSupport  {
 	 * 
 	 */
 	public String preparedFindGentePorNombre_CC_C() throws Exception {	        		
-		//Preguntar si el Rol es proveedor, por Sí Tomar el genteNr y envialo directo Pro No ir a buscar el 
+		//Preguntar si el Rol es proveedor, por So Tomar el genteNr y envialo directo Pro No ir a buscar el 
 		Usuario usuario = getUsuarioSesion();
 		return "showSoloImpagosC";
 	}
@@ -1012,7 +1019,7 @@ public class ServicesAction extends ActionSupport  {
 		
 		if (result.equals("error")){			
 		}else{
-			result = "Se ha generado la Transacción Nr. " + result;
+			result = "Se ha generado la Transaccion Nr. " + result;
 			
 		}
 		
@@ -1385,7 +1392,7 @@ public class ServicesAction extends ActionSupport  {
 	}	
 
 	/**
-	 * Envía el comprobante por Mail al cliente
+	 * Envoa el comprobante por Mail al cliente
 	 * 
 	 */
 	public String sendComprobCliente() throws Exception {	        								
@@ -1395,7 +1402,7 @@ public class ServicesAction extends ActionSupport  {
 		
 		String result = "";
 		
-		//Obtengo la transacción
+		//Obtengo la transaccion
 		Transac transacN = transaccionManager.getTransacByPK(transac.getTransacNr());
 		
 		//Obtengo el domicilio que tiene como descripcion @adm
@@ -1406,15 +1413,15 @@ public class ServicesAction extends ActionSupport  {
 			//Obtengo el documento
 			File fileDownload = cuentaCorrienteManager.getComprobantePdf(transac.getTransacNr(), getUsuarioSesion());
 			
-			//Obtener la dirección de correo del destinatario
+			//Obtener la direccion de correo del destinatario
 			Email email = new Email("Simpa - Comprobante Electronico","Se adjunta el Comprobante tipo: " + transacN.getTipoComprob().getDescripcion() + " Numero : " + transacN.getPrefijo() + "-" + transacN.getNrComprob(),fileDownload, domicilios.getInternet());
 			
 			usuarioManager.sendMail(email);
 			
-			result = "<div class = space/>" +"<div class = space/>"+ "<b>Se ha enviado el correo con éxito al la dirección de correo " + domicilios.getInternet() + "</b>";
+			result = "<div class = space/>" +"<div class = space/>"+ "<b>Se ha enviado el correo con oxito al la direccion de correo " + domicilios.getInternet() + "</b>";
 		
 		}else{
-			result = "<div class = space/>" +"<div class = space/>"+ "<b>El agendado " + transacN.getGente().getRazonSocial() + " no tiene cargada una dirección de correo electrónico en su domicilio \"@adm\"</b>";
+			result = "<div class = space/>" +"<div class = space/>"+ "<b>El agendado " + transacN.getGente().getRazonSocial() + " no tiene cargada una direccion de correo electronico en su domicilio \"@adm\"</b>";
 		}		
 		
 		ServletOutputStream sos = null;
@@ -2380,6 +2387,9 @@ public class ServicesAction extends ActionSupport  {
 		
 		request.setAttribute("trazabiList", trazabiList);
 		
+		fecha = DateUtil.getCanonicalFech(new Date(System.currentTimeMillis()));
+		request.setAttribute("fecha", DateUtil.getCanonicalFech(new Date(System.currentTimeMillis())));
+		
 		return "success";
 	}
 	
@@ -2403,6 +2413,8 @@ public class ServicesAction extends ActionSupport  {
 		ActionContext.getContext().getSession().put("obraSocialList", obraSocialList);
 		
 		request.setAttribute("trazabiFarmaList", trazabiFarmaList);
+		
+		fecha = DateUtil.getCanonicalFech(new Date(System.currentTimeMillis()));
 		
 		nombre = getUsuarioSesion().getNombre();
 		
@@ -2443,7 +2455,35 @@ public class ServicesAction extends ActionSupport  {
 			
 		HttpServletResponse response =(HttpServletResponse)ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_RESPONSE);
 		
-		String result = transaccionManager.sendRemitoAnmat(transac.getTransacNr(), getUsuarioSesion());	
+		Timestamp fecha_ = new Timestamp(System.currentTimeMillis());
+		try{
+			fecha_ = DateUtil.composeCanonicalFech(fecha);
+		}catch(Exception e){
+			ServletOutputStream sos = null;
+			try {
+				sos = response.getOutputStream();
+			} catch (IOException ie) {
+				ie.printStackTrace();
+			}
+			
+			StringBuilder salida = new StringBuilder();
+	        
+			salida.append("Error en el formato de Fecha ingresado el formato debe ser (aaaammdd)");
+
+			response.setContentType("text/html; charset=iso-8859-1");
+	        //Imprime el resultado
+	        try {
+				sos.print(salida.toString());
+			} catch (IOException yye) {
+				yye.printStackTrace();
+			}
+			
+			return null;	
+		}
+		
+		String result = transaccionManager.sendRemitoAnmat(transac.getTransacNr(), getUsuarioSesion(), fecha_.getTime());	
+		
+		
 		
 		ServletOutputStream sos = null;
 		try {
@@ -2550,7 +2590,33 @@ public class ServicesAction extends ActionSupport  {
 				
 		HttpServletResponse response =(HttpServletResponse)ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_RESPONSE);
 		
-		String result = transaccionManager.sendRemitoEgresoAnmat(transac.getTransacNr(), getUsuarioSesion(), datosTrazaWS);						
+		Timestamp fecha_ = new Timestamp(System.currentTimeMillis());
+		try{
+			fecha_ = DateUtil.composeCanonicalFech(fecha);
+		}catch(Exception e){
+			ServletOutputStream sos = null;
+			try {
+				sos = response.getOutputStream();
+			} catch (IOException ie) {
+				ie.printStackTrace();
+			}
+			
+			StringBuilder salida = new StringBuilder();
+	        
+			salida.append("Error en el formato de Fecha ingresado el formato debe ser (aaaammdd)");
+
+			response.setContentType("text/html; charset=iso-8859-1");
+	        //Imprime el resultado
+	        try {
+				sos.print(salida.toString());
+			} catch (IOException yye) {
+				yye.printStackTrace();
+			}
+			
+			return null;	
+		}
+		
+		String result = transaccionManager.sendRemitoEgresoAnmat(transac.getTransacNr(), getUsuarioSesion(), datosTrazaWS,fecha_.getTime());						
 		
 		ServletOutputStream sos = null;
 		try {

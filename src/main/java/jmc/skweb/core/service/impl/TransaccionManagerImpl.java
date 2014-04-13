@@ -395,7 +395,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 			Integer empresaNrSk, String fechaEntrega, Transac transacRequest, int tipoComprobNr, Usuario usuario) throws Exception {
 		Transac transac = new Transac();
 		//
-		// Obtengo el numero de transacción
+		// Obtengo el numero de transacciï¿½n
 		Integer transacNr = getUltimaNumeracion(Constants.ID_NUMERACIONES_TRANSAC);
 		transacNr = Integer.parseInt(String.valueOf(transacNr) + empresaNrSk);
 		
@@ -410,7 +410,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 		String result = "error";
 		try {
 			String oficialCuentaIdOpe= null;
-			//Envío el Mail al Oficial de Cuenta
+			//Envï¿½o el Mail al Oficial de Cuenta
 			UsuarioWeb activUser = usuarioManager.getUsuarioByPK(usuario.getIdUsuario());
 			String subject = "";
 			String msg = "";					
@@ -777,7 +777,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 		return trazabiFarmaList;
 	}
 
-	public String sendRemitoAnmat(Integer transacNr, Usuario usuario) {
+	public String sendRemitoAnmat(Integer transacNr, Usuario usuario, Long fechaEvento) {
 		String result = "";
 		String resultFinal = "";
 		//Obtengo los datos de la empresa
@@ -787,7 +787,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 		//Obtengo los datos de Trazabi
 		List<Trazabi> trazabiList = extendedTrazabiDAO.getTrazabiPorTransac(transac.getTransacNr());
 		//Castear Trazabi a TrazabiFarma
-		List<TrazabiFarma> trazabiFarmaList = castTrazabiToFarma(trazabiList, usuario.getGenteNr());
+		List<TrazabiFarma> trazabiFarmaList = castTrazabiToFarma(trazabiList, usuario.getGenteNr(),fechaEvento);
 		//Inserto los registros a TrazabiFarmaDAO
 		FormatUtil fu = new FormatUtil();		
 		
@@ -817,6 +817,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 				trazabiFarma.setLoteStr(getLote(trazabiFarma.getNrlote()));			
 				trazabiFarma.setProcesoIngreso(true);
 				trazabiFarma.setProcesoEgreso(false);
+				
 				extendedTrazabiFarmaDAO.save(trazabiFarma);
 				SendMedicamentosDocument sm = null;
 				SendMedicamentosResponseDocument sr = null;
@@ -829,11 +830,11 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							sr = serviceTrazaManager.sendMedicamento(sm,em.getUrlTraza());
 							r = getResult(sr);
 						} catch (Exception e) {
-							result = "Hubo un problema en la cominicación con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+							result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 							e.printStackTrace();
 						}
 					} catch (Exception e) {
-						result = "Hubo un problema en la cominicación con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 						e.printStackTrace();
 					}			
 					if (r != null){
@@ -846,7 +847,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							result = r.getErrores();
 						}
 					}else{
-						result = "Hubo un problema en la cominicación con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 					}	
 				}else{
 					result = "OK";
@@ -902,7 +903,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 		return result;
 	}
 	
-	private List<TrazabiFarma> castTrazabiToFarma(List<Trazabi> trazabiList, Integer genteNr){
+	private List<TrazabiFarma> castTrazabiToFarma(List<Trazabi> trazabiList, Integer genteNr, Long fechaEvento){
 		List<TrazabiFarma> trazabiFarmaList = new ArrayList<TrazabiFarma>();
 		for(Trazabi trazabi: trazabiList){
 			TrazabiFarma trazabiFarma = new TrazabiFarma();
@@ -910,7 +911,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 			trazabiFarma.setGlndestinoIng(trazabi.getGlndestinoSal());
 			trazabiFarma.setCuitOrigenIng(trazabi.getCuitOrigenSal());
 			trazabiFarma.setCuitDestinoIng(trazabi.getCuitDestinoSal());
-			trazabiFarma.setFechaIng(new Date(System.currentTimeMillis()));
+			trazabiFarma.setFechaIng(new Date(fechaEvento));
 			trazabiFarma.setStock(trazabi.getStock());
 			trazabiFarma.setGtin(trazabi.getGtin());
 			trazabiFarma.setSerieGtin(trazabi.getSerieGtin());
@@ -950,7 +951,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 }
 
 
-	public String sendRemitoEgresoAnmat(Integer transacNr, Usuario usuario, DatosTrazaWS datos) {
+	public String sendRemitoEgresoAnmat(Integer transacNr, Usuario usuario, DatosTrazaWS datos, Long fechaEvento) {
 		String result = "";
 		String resultFinal = "";
 		//Obtengo los datos de la empresa
@@ -1003,7 +1004,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 				}
 				
 				trazabiFarmaOrig.setObs(datos.getObs());
-				trazabiFarmaOrig.setFechaSalida(new Date(System.currentTimeMillis()));			
+				trazabiFarmaOrig.setFechaSalida(new Date(fechaEvento));			
 				extendedTrazabiFarmaDAO.update(trazabiFarmaOrig);
 				SendMedicamentosDocument sm = null;
 				SendMedicamentosResponseDocument sr = null;
@@ -1016,11 +1017,11 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							sr = serviceTrazaManager.sendMedicamento(sm,em.getUrlTraza());
 							r = getResult(sr);
 						} catch (Exception e) {
-							result = "Hubo un problema en la cominicación con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+							result = "Hubo un problema en la cominicaciï¿½n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 							e.printStackTrace();
 						}
 					} catch (Exception e) {
-						result = "Hubo un problema en la cominicación con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicaciï¿½n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 						e.printStackTrace();
 					}			
 					if (r != null){
@@ -1034,7 +1035,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							result = r.getErrores();
 						}
 					}else{
-						result = "Hubo un problema en la cominicación con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicaciï¿½n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 					}
 					if (!result.equals("OK")){
 						resultFinal = resultFinal + " [Serie: " + trazabiFarma.getSerieGtin()+ "] " + result + "<br>";				
@@ -1197,11 +1198,11 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							sr = serviceTrazaManager.sendMedicamento(sm,em.getUrlTraza());
 							r = getResult(sr);
 						} catch (Exception e) {
-							result = "Hubo un problema en la cominicación con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+							result = "Hubo un problema en la cominicaciï¿½n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 							e.printStackTrace();
 						}
 					} catch (Exception e) {
-						result = "Hubo un problema en la cominicación con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicaciï¿½n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 						e.printStackTrace();
 					}			
 					if (r != null){
@@ -1215,7 +1216,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							result = r.getErrores();
 						}
 					}else{
-						result = "Hubo un problema en la cominicación con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicaciï¿½n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 					}
 					if (!result.equals("OK")){
 						resultFinal = resultFinal + " [Serie: " + trazabiFarma.getSerieGtin()+ "] " + result + "<br>";				

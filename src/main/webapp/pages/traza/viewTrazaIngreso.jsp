@@ -35,6 +35,7 @@
 					</td>										
 				</tr>				
 				</table>
+				
 					<div class = "separator"></div>
 					<ec:table					
 						tableId="notReg" 
@@ -79,6 +80,23 @@
 						</ec:row>
 					</ec:table>
 					<div class="space"></div>
+					<s:form action="recepcionarPorRemito" id="recepcionarPorRemitoForm">
+							<s:hidden key="transac.transacNr" name="transac.transacNr"/>	
+							<table>
+							
+							<tr>
+							<td>
+							<s:textfield name="fecha" size="8" maxlength="8" label="Ingrese la fecha del evento en formato (aammdd)" />
+							</td>
+							</tr>
+							</table>
+							
+					
+							
+					</s:form>
+					
+					<div class="space"></div>
+				
 				<div style="display: inline;" > 
 					<img src="<%=request.getContextPath()%>/images/general/icon_informar_anmat.png" alt="Informar Ingreso a ANMAT" title="Informar Ingreso a ANMAT" onclick="recepcionarPorRemito();"></img>
 				</div>
@@ -87,9 +105,7 @@
 			
 </div>		
 
-<s:form action="recepcionarPorRemito" id="recepcionarPorRemitoForm">
-	<s:hidden key="transac.transacNr" name="transac.transacNr"/>	
-</s:form>
+
 
 <s:form action="preparedFindRemitosPendientesPorTransac" id="preparedFindRemitosPendientesPorTransacForm">
 </s:form>
@@ -103,7 +119,8 @@ function viewMedicamentos(transacNr){
 	document.getElementById("showMedicamentosForm").submit();
 }
 
-function recepcionarPorRemito(){		
+function recepcionarPorRemito(){	
+	
 	$.blockUI({ 
 		message:  '<h1>Se está enviando información a ANMAT, por favor aguarde...</h1>'		
     }); 

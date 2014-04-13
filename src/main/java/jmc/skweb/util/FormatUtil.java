@@ -716,12 +716,12 @@ public class FormatUtil {
 		String vencimiento = tf.getVencimLote();		
 		m.setVencimiento(vencimiento);			
 		//Parseo FEvento
-		Date fechaHoraIngreso = tf.getFechaIng();			
-		m.setFEvento(DateUtil.getFormatedDate(new Timestamp(fechaHoraIngreso.getTime())));			
+		Date fechaHoraSalida = tf.getFechaSalida();			
+		m.setFEvento(DateUtil.getFormatedDate(new Timestamp(fechaHoraSalida.getTime())));			
 		m.setLote(tf.getLoteStr());			
 		m.setNRemito(datos.getNroRemito());
 		//Parseo HEvento			
-		m.setHEvento(DateUtil.getFormatedHour(new Timestamp(fechaHoraIngreso.getTime())));
+		m.setHEvento(DateUtil.getFormatedHour(new Timestamp(fechaHoraSalida.getTime())));
 		m.setIdObraSocial(datos.getIdObraSocial());
 		m.setNroAsociado(datos.getNroAsociado());
 		m.setNombres(datos.getNombrePaciente());

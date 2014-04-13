@@ -2,9 +2,9 @@ package jmc.skweb.core.service;
 
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 
-import jmc.skweb.core.model.ClieArticPrecio;
 import jmc.skweb.core.model.Domicilios;
 import jmc.skweb.core.model.Gente;
 import jmc.skweb.core.model.Items;
@@ -73,11 +73,11 @@ public interface TransaccionManager {
 
 	List<Trazabi> getTrazabiPorComprobante(Integer transacNr);
 
-	String sendRemitoAnmat(Integer transacNr, Usuario usuario);
+	String sendRemitoAnmat(Integer transacNr, Usuario usuario, Long fechaEvento);
 
 	List<Transac> getRemitosAEnviarTraza(Usuario usuarioSesion);
 
-	String sendRemitoEgresoAnmat(Integer transacNr, Usuario usuarioSesion, DatosTrazaWS datosTrazaWS);
+	String sendRemitoEgresoAnmat(Integer transacNr, Usuario usuarioSesion, DatosTrazaWS datosTrazaWS, Long fechaEvento);
 	
 	public List<TrazabiFarma> getTrazabiFarmaPorTransac(Integer transacNr) ;
 
