@@ -72,6 +72,10 @@
    		<put-attribute name="body" value="/pages/admin/adminEmpresa.jsp"/>
 	</definition>
 	
+	<definition name="preparedDevolucionPage" extends="definition">
+   		<put-attribute name="body" value="/pages/traza/viewTrazaDevolucion.jsp"/>
+	</definition>
+	
 	<definition name="preparedFindAgendadoPorNombre_CRPage" extends="definition">
    		<put-attribute name="body" value="/pages/cheques/preparedFindAgendadoPorNombre_CR.jsp"/>
 	</definition>

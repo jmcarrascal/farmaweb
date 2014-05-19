@@ -674,6 +674,69 @@ public class FormatUtil {
 	
 	}
 	
+	public SendMedicamentosDocument makeSendMedicamentosDevolucionDocument(TrazabiFarma tf, String usr, String pass)
+			throws Exception {
+
+				SendMedicamentosDocument req = null;
+				try{
+				req = SendMedicamentosDocument.Factory.newInstance();
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				SendMedicamentos sm = req.addNewSendMedicamentos();
+				
+				MedicamentosDTO[] arg0Array = new MedicamentosDTO[1]; 		
+				
+				MedicamentosDTO m = MedicamentosDTO.Factory.newInstance();
+				
+				// Carga del objeto Requet
+				String errorParseo = "";
+				// Cargo Cabezera.
+				
+				m = makeDatosComunes(m,tf);
+				m.setIdEvento(tf.getCodEventoIng().toString());
+				m.setGlnOrigen(tf.getGlndestinoIng().trim());
+				m.setGlnDestino(tf.getGlnorigenIng().trim()
+						
+				
+				);
+				m.setCuitOrigen(tf.getCuitOrigenSal());
+				m.setCuitDestino(tf.getCuitOrigenIng());
+				//Parseo Vencimiento												
+				String vencimiento = tf.getVencimLote();		
+				m.setVencimiento(vencimiento);			
+				//Parseo FEvento
+				Date fechaHoraIngreso = tf.getFechaIng();			
+				m.setFEvento(DateUtil.getFormatedDate(new Timestamp(System.currentTimeMillis())));			
+				m.setLote(tf.getLoteStr());			
+				if (tf.getNrRemCompra().indexOf("-") != -1){
+					String remito = "R" + tf.getNrRemCompra().replace("-", "");
+					m.setNRemito(remito);
+				}else{
+					m.setNRemito(tf.getNrRemCompra());
+				}
+				
+				//Parseo HEvento			
+				m.setHEvento(DateUtil.getFormatedHour(new Timestamp(fechaHoraIngreso.getTime())));
+				
+				arg0Array[0] = m;
+				
+				sm.setArg0Array(arg0Array);
+				sm.setArg1(usr);
+				sm.setArg2(pass);
+				
+				System.out.println("GNL Origen: " + m.getGlnOrigen());
+				System.out.println("GNL Destino: " + m.getGlnDestino());
+				System.out.println("Fecha Evento: " + m.getFEvento());
+				System.out.println("ID Evento: " + m.getIdEvento());
+				System.out.println("Lote: " + m.getLote());
+				
+				return req;
+			
+			}
+	
 	public MedicamentosDTO makeDatosComunes (MedicamentosDTO m,TrazabiFarma tf){
 		m.setGtin(tf.getGtin());
 		m.setNumeroSerial(tf.getSerieGtin());

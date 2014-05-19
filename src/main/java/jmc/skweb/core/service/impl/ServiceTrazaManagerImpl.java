@@ -57,7 +57,7 @@ import com.inssjp.mywebservice.business.WebServiceError;
 public class ServiceTrazaManagerImpl implements ServiceTrazaManager {
 
 	
-	private ParametrizacionManager parametrizacionManager;
+	private ParametrizacionManager parametrizacionManager; 
 
 	public ParametrizacionManager getParametrizacionManager() {
 		return parametrizacionManager;

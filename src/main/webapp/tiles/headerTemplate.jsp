@@ -146,6 +146,7 @@
 <!--		                <li><a href="preparedNewUsuario"><span>Recepcionar por Caja</span></a></li>		                -->
 		                <li><a href="preparedSendRemitos"><span>Enviar Remito(SK)</span></a></li>
 <!--		                <li><a href="preparedNewUsuario"><span>Enviar por Caja</span></a></li>-->
+ 						<li><a href="preparedDevolucion"><span>Devolución a Drogueria</span></a></li>
 		            </ul>
 		        </li>
 		        <li><a href="#" class="parent"><span>Trazabilidad por Unidad</span></a>
@@ -179,6 +180,7 @@
 <!--		                <li><a href="preparedNewUsuario"><span>Recepcionar por Caja</span></a></li>		                -->
 		                <li><a href="preparedSendRemitos"><span>Enviar Remito(SK)</span></a></li>
 <!--		                <li><a href="preparedNewUsuario"><span>Enviar por Caja</span></a></li>-->
+						<li><a href="preparedDevolucion"><span>Devolución a Drogueria</span></a></li>
 		            </ul>
 		        </li>
 		        <li><a href="#" class="parent"><span>Trazabilidad por Unidad</span></a>

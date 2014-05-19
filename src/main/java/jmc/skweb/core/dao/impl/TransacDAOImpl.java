@@ -243,13 +243,14 @@ import jmc.skweb.util.Constants;
 						"and t.tipoComprob.nr = " + Constants.ID_TIPO_COMP_REMITO+ " " +
 						"and ( t.transacNr = i.transacNr) and i.procesoEgreso = false and i.procesoIngreso = true) ";										
 				transacList = getHibernateTemplate().find(sql);
-				
+				System.out.println("la llamada es: " + sql);
 			}catch(Exception e){
 				System.out.println(e.getMessage());
 			}finally{
 				}
 			return transacList;
 		}
+		
 
 		public List<Transac> getRemitosEnviados(Gente genteSession, Integer transacNrDesde, String gln) {
 			List<Transac> transacList = null; 

@@ -153,6 +153,14 @@
 	<entry><url>roundfun</url><rolEnable>0,1,2,10,4,20,5</rolEnable></entry>
 	<entry><url>setTabSelected</url><rolEnable>0,1,2,10,4,20,5</rolEnable></entry>
 	<entry><url>close</url><rolEnable>0,1,2,10,4,20,5</rolEnable></entry>
+	
+	<entry><url>preparedDevolucion</url><rolEnable>0,1,2,10,4,20,5</rolEnable></entry>
+	<entry><url>findMedicamentoRecepcionado</url><rolEnable>0,1,2,10,4,20,5</rolEnable></entry>
+	<entry><url>devolverMedicamento</url><rolEnable>0,1,2,10,4,20,5</rolEnable></entry>
+	<entry><url>devolucionMedicamento</url><rolEnable>0,1,2,10,4,20,5</rolEnable></entry>
+	
+	
+	
 
 </actions>
 

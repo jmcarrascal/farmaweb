@@ -53,6 +53,7 @@ import jmc.skweb.util.email.Email;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -1606,6 +1607,113 @@ public class ServicesAction extends ActionSupport  {
 		return null;
 			
 	}	
+	
+	
+	/**
+	 *
+	 * 
+	 */
+	public String 	devolucionMedicamento() throws Exception {	        								
+		
+		HttpServletResponse response = (HttpServletResponse) ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_RESPONSE);
+		HttpServletRequest request =(HttpServletRequest)ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_REQUEST);
+
+		Usuario usuario = getUsuarioSesion();
+		
+		TrazabiFarma trazabiFarmaU = transaccionManager.getBySerieGtinRecepcionado(trazabiFarma);	
+		
+		trazabiFarmaU.setCodEventoIng(trazabiFarma.getCodEventoIng());
+		
+		String ss = transaccionManager.sendDevolucionAnmat(usuario, trazabiFarmaU);
+		
+		System.out.println(ss);
+		
+//		Gson gson = new Gson();
+		
+		
+		// convert java object to JSON format,
+		// and returned as JSON formatted string
+//		String json = gson.toJson(trazabiFarmaU);
+		
+		ServletOutputStream sos = null;
+		try {
+			sos = response.getOutputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		StringBuilder salida = new StringBuilder();
+       
+		salida.append(ss);
+		
+		response.setContentType("text/html; charset=iso-8859-1");
+       //Imprime el resultado
+       try {
+			sos.print(salida.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+			
+	}	
+
+	
+	/**
+	 *
+	 * 
+	 */
+	public String findMedicamentoRecepcionado() throws Exception {	        								
+		
+		HttpServletResponse response = (HttpServletResponse) ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_RESPONSE);
+		HttpServletRequest request =(HttpServletRequest)ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_REQUEST);
+
+		Usuario usuario = getUsuarioSesion();
+		
+		TrazabiFarma trazabiFarmaU = transaccionManager.getBySerieGtinRecepcionado(trazabiFarma);	
+		
+		Gson gson = new Gson();
+		if (trazabiFarmaU == null){
+			trazabiFarmaU = new TrazabiFarma();
+		}
+		
+		try{
+		Stock st = trazabiFarmaU.getStock();
+		
+		
+		System.out.println(st.getDescriAmpliada());
+		
+		trazabiFarmaU.setStockTmp(st);
+		 
+		}catch(Exception el){
+		
+		}
+		// convert java object to JSON format,
+		// and returned as JSON formatted string
+		String json = gson.toJson(trazabiFarmaU);
+		
+		ServletOutputStream sos = null;
+		try {
+			sos = response.getOutputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		StringBuilder salida = new StringBuilder();
+        
+		salida.append(json);
+		
+		response.setContentType("text/html; charset=iso-8859-1");
+        //Imprime el resultado
+        try {
+			sos.print(salida.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+			
+	}	
 
 	
 	/**
@@ -2421,6 +2529,19 @@ public class ServicesAction extends ActionSupport  {
 		return "success";
 	}
 
+	
+	/**
+	 * Este Metodo muestra los Medicamentos envio por el usuario logeado de Trazabilidad
+	 */
+	public String preparedDevolucion() throws Exception {	        		
+		
+		HttpServletRequest request =(HttpServletRequest)ActionContext.getContext().getActionInvocation().getInvocationContext().get(ServletActionContext.HTTP_REQUEST);
+				
+		
+		
+		return "success";
+	}
+	
 	
 	/**
 	 * Este Metodo muestra los Medicamentos envio por el usuario logeado de Trazabilidad

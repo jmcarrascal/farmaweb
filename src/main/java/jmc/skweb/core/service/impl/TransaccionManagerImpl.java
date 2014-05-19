@@ -395,7 +395,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 			Integer empresaNrSk, String fechaEntrega, Transac transacRequest, int tipoComprobNr, Usuario usuario) throws Exception {
 		Transac transac = new Transac();
 		//
-		// Obtengo el numero de transacci�n
+		// Obtengo el numero de transaccion
 		Integer transacNr = getUltimaNumeracion(Constants.ID_NUMERACIONES_TRANSAC);
 		transacNr = Integer.parseInt(String.valueOf(transacNr) + empresaNrSk);
 		
@@ -410,7 +410,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 		String result = "error";
 		try {
 			String oficialCuentaIdOpe= null;
-			//Env�o el Mail al Oficial de Cuenta
+			//Envoo el Mail al Oficial de Cuenta
 			UsuarioWeb activUser = usuarioManager.getUsuarioByPK(usuario.getIdUsuario());
 			String subject = "";
 			String msg = "";					
@@ -1017,11 +1017,11 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							sr = serviceTrazaManager.sendMedicamento(sm,em.getUrlTraza());
 							r = getResult(sr);
 						} catch (Exception e) {
-							result = "Hubo un problema en la cominicaci�n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+							result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 							e.printStackTrace();
 						}
 					} catch (Exception e) {
-						result = "Hubo un problema en la cominicaci�n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 						e.printStackTrace();
 					}			
 					if (r != null){
@@ -1035,7 +1035,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							result = r.getErrores();
 						}
 					}else{
-						result = "Hubo un problema en la cominicaci�n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 					}
 					if (!result.equals("OK")){
 						resultFinal = resultFinal + " [Serie: " + trazabiFarma.getSerieGtin()+ "] " + result + "<br>";				
@@ -1198,11 +1198,11 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							sr = serviceTrazaManager.sendMedicamento(sm,em.getUrlTraza());
 							r = getResult(sr);
 						} catch (Exception e) {
-							result = "Hubo un problema en la cominicaci�n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+							result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 							e.printStackTrace();
 						}
 					} catch (Exception e) {
-						result = "Hubo un problema en la cominicaci�n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 						e.printStackTrace();
 					}			
 					if (r != null){
@@ -1216,7 +1216,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							result = r.getErrores();
 						}
 					}else{
-						result = "Hubo un problema en la cominicaci�n con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+						result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 					}
 					if (!result.equals("OK")){
 						resultFinal = resultFinal + " [Serie: " + trazabiFarma.getSerieGtin()+ "] " + result + "<br>";				
@@ -1266,6 +1266,83 @@ public class TransaccionManagerImpl implements TransaccionManager {
 		List<TrazabiFarma> trazabiFarmaList = extendedTrazabiFarmaDAO.getTrazabiFarmaPorRemito(nrRemitoPropio, empresaWeb.getGln());
 
 		return trazabiFarmaList;
+	}
+
+	public TrazabiFarma getBySerieGtinRecepcionado(TrazabiFarma trazabiFarma) {
+		
+		return extendedTrazabiFarmaDAO.getBySerieGtinRecepcionado(trazabiFarma.getSerieGtin(), trazabiFarma.getGtin());
+		
+	}
+	
+	public String sendDevolucionAnmat(Usuario usuario, TrazabiFarma trazabiFarma) {
+		String result = "";
+		String resultFinal = "";
+		//Obtengo los datos de la empresa
+		EmpresaWeb em = empresaWebDAO.getByPrimaryKey(usuario.getIdEmpresa());
+		
+		
+		//Inserto los registros a TrazabiFarmaDAO
+		FormatUtil fu = new FormatUtil();		
+		
+		
+		
+		
+		trazabiFarma.setLoteStr(getLote(trazabiFarma.getNrlote()));			
+		//trazabiFarma.setProcesoIngreso(true);
+		//trazabiFarma.setProcesoEgreso(false);
+		
+		//extendedTrazabiFarmaDAO.save(trazabiFarma);
+		SendMedicamentosDocument sm = null;
+		SendMedicamentosResponseDocument sr = null;
+		ResultSendMedicamento r = null;
+		if (trazabiFarma.getTrazaObli() == -1){
+			try {					
+					sm = fu.makeSendMedicamentosDevolucionDocument(trazabiFarma,em.getUsrPami().trim(),em.getPassPami().trim());					
+				//Informar a ANMAT el ingreso de todos los medicamentos
+				try {
+					sr = serviceTrazaManager.sendMedicamento(sm,em.getUrlTraza());
+					r = getResult(sr);
+					if (r.isExito()){
+						//Elimino
+						extendedTrazabiFarmaDAO.remove(trazabiFarma);
+						result = "Se ha realizado con exito la devolucion con el Codigo de Transaccion N: " + r.getTransacNr();
+						return result;
+					}
+ 
+				} catch (Exception e) {
+					result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+					e.printStackTrace();
+				}
+			} catch (Exception e) {
+				result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+				e.printStackTrace();
+			}			
+			if (r != null){
+				if (r.getTransacNr() != null && !r.getTransacNr().equals("")){
+					trazabiFarma.setRespuestaIngreso(r.getTransacNr());
+					trazabiFarma.setErrores(r.getErrores());
+					extendedTrazabiFarmaDAO.update(trazabiFarma);
+					result = "OK";
+				}else{
+					result = r.getErrores();
+				}
+			}else{
+				result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
+			}	
+		}else{
+			result = "OK";
+		}
+		if (!result.equals("OK")){
+			resultFinal = resultFinal + " [Serie: " + trazabiFarma.getSerieGtin()+ "] " + result + "<br>";
+			extendedTrazabiFarmaDAO.remove(trazabiFarma);				
+		}	
+		
+		
+		
+		if (resultFinal.equals("")){
+			resultFinal = "OK";
+		}
+		return resultFinal;		
 	}
 
 }

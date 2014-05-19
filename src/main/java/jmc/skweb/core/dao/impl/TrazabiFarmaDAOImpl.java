@@ -59,6 +59,24 @@ import jmc.skweb.core.model.traza.TrazabiFarma;
 			}
 		}
 
+		public TrazabiFarma getBySerieGtinRecepcionado(String serieGtin, String gtin) {
+			List<TrazabiFarma> trazabiFarmaList = null; 
+			try{				
+				String sql = "select tr from TrazabiFarma tr where tr.serieGtin = '" + serieGtin + "' and tr.gtin = '" + gtin + "' and tr.procesoIngreso = 1 and tr.procesoEgreso = 0 "   ;
+				
+				trazabiFarmaList = getHibernateTemplate().find(sql);
+				
+			}catch(Exception e){
+				System.out.println(e.getMessage());
+			}finally{
+				}
+			if (trazabiFarmaList.size() > 0){
+				return trazabiFarmaList.get(0);
+			}else{
+				return new TrazabiFarma();
+			}
+		}
+		
 		public List<TrazabiFarma> getTrazabiFarmaPorRemito(
 				String nrRemitoPropio, String gln) {
 			List<TrazabiFarma> trazabiFarmaList = null; 

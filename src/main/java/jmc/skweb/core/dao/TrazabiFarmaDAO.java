@@ -22,6 +22,7 @@ public interface TrazabiFarmaDAO extends GenericDAO<TrazabiFarma> {
 
 	List<TrazabiFarma> getTrazabiFarmaPorRemito(String nrRemitoPropio,
 			String gln);
-
+	
+	public TrazabiFarma getBySerieGtinRecepcionado(String serieGtin, String gtin) ;
 
 }

@@ -107,4 +107,8 @@ public interface TransaccionManager {
 	List<TrazabiFarma> getTrazabiFarmaPorRemito(String nrRemitoPropio,
 			Usuario usuarioSesion);
 
+	TrazabiFarma getBySerieGtinRecepcionado(TrazabiFarma trazabiFarma);
+	
+	public String sendDevolucionAnmat(Usuario usuario, TrazabiFarma trazabiFarma) ;
+
 	}

@@ -58,6 +58,10 @@
 		<action name="preparedListParametrizacion" method="preparedListParametrizacion" class="services">
 			<result name="success" type="tiles">preparedListParametrizacionPage</result>			
 		</action>
+		
+		<action name="preparedDevolucion" method="preparedDevolucion" class="services">
+			<result name="success" type="tiles">preparedDevolucionPage</result>			
+		</action>	
 
 		<action name="preparedEditParametrizacion" method="preparedEditParametrizacion" class="services">
 			<result name="success" type="tiles">preparedEditParametrizacionPage</result>			
@@ -71,6 +75,10 @@
 			<result name="success" type="tiles">preparedCotizacionPage</result>			
 		</action>
 		
+		<action name="devolucionMedicamento" method="devolucionMedicamento" class="services">
+		</action>
+		
+		
 		<action name="getOSPorNombreList" method="getOSPorNombreList" class="services">
 		</action>
 		
@@ -83,6 +91,11 @@
 
 		<action name="showCotizacion" method="showCotizacion" class="services">						
 		</action>
+		
+		<action name="findMedicamentoRecepcionado" method="findMedicamentoRecepcionado" class="services">						
+		</action>
+		
+		
 
 		<action name="downloadFactura" method="downloadFactura" class="services">						
 		</action>
