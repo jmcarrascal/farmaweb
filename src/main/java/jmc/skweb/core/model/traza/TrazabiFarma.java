@@ -77,11 +77,25 @@ public class TrazabiFarma implements java.io.Serializable {
 	private String obs;
 	private String descripC;
 	private Long nrTrazabi;
+	private String idAnmat;
 	
 	
 	
 	
 	
+	
+
+	@Column(name="idAnmatSalida")
+	public String getIdAnmat() {
+		return idAnmat;
+	}
+
+
+	public void setIdAnmat(String idAnmat) {
+		this.idAnmat = idAnmat;
+	}
+
+
 	@Transient
 	public Stock getStockTmp() {
 		return stockTmp;

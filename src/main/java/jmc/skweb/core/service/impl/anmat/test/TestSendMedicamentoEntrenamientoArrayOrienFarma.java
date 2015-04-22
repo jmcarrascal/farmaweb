@@ -104,8 +104,8 @@ public class TestSendMedicamentoEntrenamientoArrayOrienFarma {
 		IWebServiceServiceStub service = null;
 		try {
 	
-			//service = new IWebServiceServiceStub("https://186.153.145.2:9050/trazamed.WebService");
-			service = new IWebServiceServiceStub("https://trazabilidad.pami.org.ar:9050/trazamed.WebService");
+			service = new IWebServiceServiceStub("https://186.153.145.2:9050/trazamed.WebService");
+			//service = new IWebServiceServiceStub("https://trazabilidad.pami.org.ar:9050/trazamed.WebService");
 			 
 			ServiceClient serviceClient = service._getServiceClient();						
 			

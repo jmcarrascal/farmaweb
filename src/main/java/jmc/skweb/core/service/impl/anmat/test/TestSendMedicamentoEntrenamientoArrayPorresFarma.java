@@ -3,36 +3,20 @@ package jmc.skweb.core.service.impl.anmat.test;
 import java.rmi.RemoteException;
 
 import javax.xml.namespace.QName;
-import javax.xml.soap.SOAPElement;
-import javax.xml.soap.SOAPHeader;
 
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNamespace;
-import org.apache.axiom.om.OMNode;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.axis2userguide.IWebServiceServiceStub;
 import org.apache.axis2.client.ServiceClient;
 
-
-import com.inssjp.mywebservice.business.MedicamentosDTO;
 import com.inssjp.mywebservice.business.MedicamentosDTODHSerie;
-import com.inssjp.mywebservice.business.SendCancelacTransacc;
-import com.inssjp.mywebservice.business.SendCancelacTransaccDocument;
-import com.inssjp.mywebservice.business.SendCancelacTransaccResponseDocument;
-import com.inssjp.mywebservice.business.SendMedicamentos;
 import com.inssjp.mywebservice.business.SendMedicamentosDHSerie;
 import com.inssjp.mywebservice.business.SendMedicamentosDHSerieDocument;
 import com.inssjp.mywebservice.business.SendMedicamentosDHSerieResponseDocument;
-import com.inssjp.mywebservice.business.SendMedicamentosDocument;
-import com.inssjp.mywebservice.business.SendMedicamentosResponseDocument;
 import com.inssjp.mywebservice.business.WebServiceError;
-import com.inssjp.mywebservice.business.WebServiceResult;
-import com.inssjp.mywebservice.business.impl.MedicamentosDTOImpl;
-import com.inssjp.mywebservice.business.impl.SendCancelacTransaccDocumentImpl;
-import com.inssjp.mywebservice.business.impl.SendCancelacTransaccImpl;
-import com.inssjp.mywebservice.business.impl.SendMedicamentosDocumentImpl;
 
 
 public class TestSendMedicamentoEntrenamientoArrayPorresFarma {

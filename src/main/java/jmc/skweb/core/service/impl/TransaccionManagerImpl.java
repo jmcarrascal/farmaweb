@@ -827,8 +827,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 							sm = fu.makeSendMedicamentosCompraDocument(trazabiFarma,em.getUsrPami().trim(),em.getPassPami().trim());					
 						//Informar a ANMAT el ingreso de todos los medicamentos
 						try {
-							sr = serviceTrazaManager.sendMedicamento(sm,em.getUrlTraza());
-							r = getResult(sr);
+							r = serviceTrazaManager.confifTransac(trazabiFarma.getGtin(), trazabiFarma.getSerieGtin(),em.getUsrPami().trim(),em.getPassPami().trim(), em.getUrlTraza());
 						} catch (Exception e) {
 							result = "Hubo un problema en la cominicacion con el servidor de ANMAT, por favor intente nuevamente en otro momento";
 							e.printStackTrace();
@@ -926,6 +925,7 @@ public class TransaccionManagerImpl implements TransaccionManager {
 			trazabiFarma.setTransacNr(trazabi.getNrTransacSalida());
 			trazabiFarma.setNrRemCompra(trazabi.getNrRemitoPropio());
 			trazabiFarma.setNrTrazabi(trazabi.getNr().longValue());
+			trazabiFarma.setIdAnmat(trazabi.getRespuestaSalida());
 			trazabiFarmaList.add(trazabiFarma);
 		}				
 		return trazabiFarmaList;
