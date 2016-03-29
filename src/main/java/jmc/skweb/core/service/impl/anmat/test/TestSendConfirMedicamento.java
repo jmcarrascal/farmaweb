@@ -14,10 +14,14 @@ import org.apache.axis2.client.ServiceClient;
 
 import com.inssjp.mywebservice.business_.IWebServiceStub;
 import com.inssjp.mywebservice.business_.IWebServiceStub.ConfirmacionTransaccionDTO;
+import com.inssjp.mywebservice.business_.IWebServiceStub.GetTransaccionesNoConfirmadas;
+import com.inssjp.mywebservice.business_.IWebServiceStub.GetTransaccionesNoConfirmadasE;
 import com.inssjp.mywebservice.business_.IWebServiceStub.GetTransaccionesNoConfirmadasResponseE;
 import com.inssjp.mywebservice.business_.IWebServiceStub.SendConfirmaTransacc;
 import com.inssjp.mywebservice.business_.IWebServiceStub.SendConfirmaTransaccE;
 import com.inssjp.mywebservice.business_.IWebServiceStub.SendConfirmaTransaccResponseE;
+import com.inssjp.mywebservice.business_.IWebServiceStub.TransaccionPlainWS;
+import com.inssjp.mywebservice.business_.IWebServiceStub.WebServiceError;
 
 
 public class TestSendConfirMedicamento {
@@ -63,24 +67,71 @@ public class TestSendConfirMedicamento {
 			
 			Options o = new Options();
 			o.setTimeOutInMilliSeconds(100000);
+			String error = null;
+			String usr_pami = "BIKANER24";
+			String pass_pami = "BIKANER12";
+			String gtin = "07795367054522";
+			String seriegtin = "64770791";
 			
 			//serviceClient.setOptions(o);
 			
+			security.addChild(userNameToken);				
+			serviceClient.addHeader(security);
+			
+			GetTransaccionesNoConfirmadasE ge = new GetTransaccionesNoConfirmadasE();
+			GetTransaccionesNoConfirmadas g = new GetTransaccionesNoConfirmadas();
+			g.setArg0(usr_pami);
+			g.setArg1(pass_pami);
+			g.setArg6(gtin);
+			g.setArg18(seriegtin);
+			ge.setGetTransaccionesNoConfirmadas(g);
+			
+			GetTransaccionesNoConfirmadasResponseE geR = new GetTransaccionesNoConfirmadasResponseE();
+
+			geR = service.getTransaccionesNoConfirmadas(ge);
+
+			if (geR.getGetTransaccionesNoConfirmadasResponse().get_return()
+					.getErrores() != null) {
+				WebServiceError[] wseArray = geR
+						.getGetTransaccionesNoConfirmadasResponse()
+						.get_return().getErrores();
+				for (WebServiceError wse : wseArray) {
+					System.out.println(wse.get_d_error());
+					error = wse.get_d_error();
+				}
+			}
+			String idTransac = "";
+			if (error == null && geR
+					.getGetTransaccionesNoConfirmadasResponse()
+					.get_return().getList() != null) {
+				for (TransaccionPlainWS t : geR
+						.getGetTransaccionesNoConfirmadasResponse()
+						.get_return().getList()) {
+					idTransac = t.get_id_transaccion();
+				}
+			}
+			
+			
+			
 			ConfirmacionTransaccionDTO[] series = new ConfirmacionTransaccionDTO[1];
 			ConfirmacionTransaccionDTO serie = new ConfirmacionTransaccionDTO();
-			serie.setP_ids_transac(1436552687l);
-			serie.setF_operacion("03/11/2014");;
+			serie.setP_ids_transac(Long.parseLong(idTransac));
+			serie.setF_operacion("06/11/2015");;
 			series[0] = serie;
-			SendConfirmaTransaccE ge = new SendConfirmaTransaccE();
-			SendConfirmaTransacc g = new SendConfirmaTransacc();
-			g.setArg0("ENTRERIOS205");
-			g.setArg1("ORIEN2012");
-			g.setArg2(series);
-			ge.setSendConfirmaTransacc(g);
+			SendConfirmaTransaccE ge_ = new SendConfirmaTransaccE();
+			SendConfirmaTransacc g_ = new SendConfirmaTransacc();
+			
+			
+			
+			
+			g_.setArg0(usr_pami);
+			g_.setArg1(pass_pami);
+			g_.setArg2(series);
+			ge_.setSendConfirmaTransacc(g_);
 			
 			SendConfirmaTransaccResponseE ger = new SendConfirmaTransaccResponseE();
 			
-			ger = service.sendConfirmaTransacc(ge);
+			ger = service.sendConfirmaTransacc(ge_);
 			
 //			WebServiceError[] wseArray = result.getSendMedicamentosDHSerieResponse().getReturn().getErroresArray();
 //			for(WebServiceError wse: wseArray){
