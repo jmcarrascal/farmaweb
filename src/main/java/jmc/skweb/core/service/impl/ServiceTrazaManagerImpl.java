@@ -7,33 +7,33 @@ import java.sql.Timestamp;
 
 import javax.xml.namespace.QName;
 
-import jmc.skweb.core.model.traza.ResultSendMedicamento;
-import jmc.skweb.core.service.ParametrizacionManager;
-import jmc.skweb.core.service.ServiceTrazaManager;
-import jmc.skweb.util.Constants;
-import jmc.skweb.util.DateUtil;
-
 import org.apache.axiom.om.OMAbstractFactory;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMFactory;
 import org.apache.axiom.om.OMNamespace;
 import org.apache.axis2.AxisFault;
-import org.apache.axis2.axis2userguide.IWebServiceServiceStub;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.transport.http.HTTPConstants;
 
-import com.inssjp.mywebservice.business.SendMedicamentosDocument;
-import com.inssjp.mywebservice.business.SendMedicamentosResponseDocument;
-import com.inssjp.mywebservice.business_.IWebServiceStub;
-import com.inssjp.mywebservice.business_.IWebServiceStub.ConfirmacionTransaccionDTO;
-import com.inssjp.mywebservice.business_.IWebServiceStub.GetTransaccionesNoConfirmadas;
-import com.inssjp.mywebservice.business_.IWebServiceStub.GetTransaccionesNoConfirmadasE;
-import com.inssjp.mywebservice.business_.IWebServiceStub.GetTransaccionesNoConfirmadasResponseE;
-import com.inssjp.mywebservice.business_.IWebServiceStub.SendConfirmaTransacc;
-import com.inssjp.mywebservice.business_.IWebServiceStub.SendConfirmaTransaccE;
-import com.inssjp.mywebservice.business_.IWebServiceStub.SendConfirmaTransaccResponseE;
-import com.inssjp.mywebservice.business_.IWebServiceStub.TransaccionPlainWS;
-import com.inssjp.mywebservice.business_.IWebServiceStub.WebServiceError;
+import com.inssjp.mywebservice.business.IWebServiceStub;
+import com.inssjp.mywebservice.business.IWebServiceStub.ConfirmacionTransaccionDTO;
+import com.inssjp.mywebservice.business.IWebServiceStub.GetTransaccionesNoConfirmadas;
+import com.inssjp.mywebservice.business.IWebServiceStub.GetTransaccionesNoConfirmadasE;
+import com.inssjp.mywebservice.business.IWebServiceStub.GetTransaccionesNoConfirmadasResponseE;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendConfirmaTransacc;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendConfirmaTransaccE;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendConfirmaTransaccResponseE;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendMedicamentosE;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendMedicamentosResponseE;
+import com.inssjp.mywebservice.business.IWebServiceStub.TransaccionPlainWS;
+import com.inssjp.mywebservice.business.IWebServiceStub.WebServiceError;
+
+
+import jmc.skweb.core.model.traza.ResultSendMedicamento;
+import jmc.skweb.core.service.ParametrizacionManager;
+import jmc.skweb.core.service.ServiceTrazaManager;
+import jmc.skweb.util.Constants;
+import jmc.skweb.util.DateUtil;
 
 
 /**
@@ -55,11 +55,11 @@ public class ServiceTrazaManagerImpl implements ServiceTrazaManager {
 		this.parametrizacionManager = parametrizacionManager;
 	}
 	
-	public SendMedicamentosResponseDocument sendMedicamento(
-			SendMedicamentosDocument request, String urlTraza) throws Exception  {
+	public SendMedicamentosResponseE sendMedicamento(
+			SendMedicamentosE request, String urlTraza) throws Exception  {
 	
-		SendMedicamentosResponseDocument result = null;
-		IWebServiceServiceStub service = null;
+		SendMedicamentosResponseE result = null;
+		IWebServiceStub service = new IWebServiceStub("https://trazabilidad.pami.org.ar:9050/trazamed.WebService");
 		
 			Long timeout = 5l * 60l * 1000l; // Cinco minutos		
 		
@@ -69,7 +69,7 @@ public class ServiceTrazaManagerImpl implements ServiceTrazaManager {
 			
 			String pass_transp_traza = parametrizacionManager.getParametrizacionByPrimaryKey(Constants.ID_PASS_TRANSPRORTE_TRAZA).getValor();			
 			
-			service = new IWebServiceServiceStub(url);
+			
 			System.out.println(url);
 			
 			service._getServiceClient().getOptions().setTimeOutInMilliSeconds(timeout);
