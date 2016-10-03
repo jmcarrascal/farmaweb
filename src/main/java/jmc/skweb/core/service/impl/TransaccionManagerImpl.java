@@ -995,6 +995,9 @@ public class TransaccionManagerImpl implements TransaccionManager {
 				SendMedicamentosE sm = null;
 				SendMedicamentosResponseE sr = null;
 				ResultSendMedicamento r = null;
+				if (transac.getGente().getGenteNr() ==  3007 || transac.getGente().getGenteNr() == 3950 || transac.getGente().getGenteNr() == 4137){
+					trazabiFarmaOrig.setObserEgr("PROGRAMA");
+				}
 				if (trazabiFarma.getTrazaObli() == -1){
 					try {					
 							sm = fu.makeSendMedicamentosEgresoDocument(trazabiFarmaOrig,em.getUsrPami().trim(),em.getPassPami().trim(), datos);					

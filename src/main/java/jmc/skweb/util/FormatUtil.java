@@ -719,7 +719,11 @@ public class FormatUtil {
 
 		// Carga del objeto Requet
 		String errorParseo = "";
-		// Cargo Cabezera.
+		// Cargo Cabecera.
+		
+		if (tf.getObserEgr().equals("PROGRAMA")){
+			m.setId_programa(16);			
+		}		
 
 		m = makeDatosComunes(m, tf);
 		m.setId_evento(tf.getCodEventoSal().toString());
@@ -729,7 +733,7 @@ public class FormatUtil {
 		} catch (Exception e) {
 		}
 		m.setCuit_origen(tf.getCuitOrigenSal());
-
+		
 		// m.setCuitDestino(tf.getCuitDestinoIng());
 		// Parseo Vencimiento
 		String vencimiento = tf.getVencimLote();
