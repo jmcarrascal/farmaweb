@@ -25,7 +25,7 @@ import javax.persistence.Transient;
 //@Table(name = "Stock", schema = "ComunSql.dbo")
 //Simpa
 //@Table(name = "Stock", schema = "ArtPlas.dbo")
-@Table(name = "Stock", schema = "ComunSql.dbo")
+@Table(name = "Stock", schema = "ComunSql")
 public class Stock implements java.io.Serializable {
 
 	private String clave;

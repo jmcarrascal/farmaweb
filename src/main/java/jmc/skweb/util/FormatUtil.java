@@ -35,9 +35,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
-import javax.media.jai.NullOpImage;
-import javax.media.jai.OpImage;
-import javax.media.jai.PlanarImage;
+
 
 import jmc.skweb.core.model.Stock;
 import jmc.skweb.core.model.report.TransacJoin;
@@ -47,19 +45,12 @@ import jmc.skweb.core.model.traza.TrazabiFarma;
 import jmc.skweb.core.model.traza.report.DatosTrazaWS;
 
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 
 import com.inssjp.mywebservice.business.MedicamentosDTO;
 import com.inssjp.mywebservice.business.SendMedicamentos;
 import com.inssjp.mywebservice.business.SendMedicamentosDocument;
-import com.sun.media.jai.codec.FileSeekableStream;
-import com.sun.media.jai.codec.ImageCodec;
-import com.sun.media.jai.codec.ImageDecoder;
-import com.sun.media.jai.codec.SeekableStream;
-import com.sun.media.jai.codec.TIFFDecodeParam;
+
 
 public class FormatUtil {
 	
@@ -177,7 +168,7 @@ public class FormatUtil {
 	{
 	       return Math.rint(numero*1000000)/1000000;
 	}
-
+/*
 	public static byte[] getFacturasExcel(List<String> facturasPerdidas){
 		
         HSSFWorkbook libro = new HSSFWorkbook();
@@ -324,7 +315,7 @@ public class FormatUtil {
 
         return array;
     }
-	
+	*/
 	public static Image getImage(byte[] bytes, boolean isThumbnail) throws IOException {
 
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
@@ -342,6 +333,7 @@ public class FormatUtil {
 		return reader.read(0, param);
 
 	}
+	/*
 
 	public static byte[] convertJPG(String filename, int parte) throws IOException {
 
@@ -388,7 +380,7 @@ public class FormatUtil {
 		return data;
     }
 
-		
+		*/
 		
 	public static byte[] mergeJPG(byte[] image1, byte[] image2){
 		ByteArrayInputStream bi1 = new ByteArrayInputStream (image1);

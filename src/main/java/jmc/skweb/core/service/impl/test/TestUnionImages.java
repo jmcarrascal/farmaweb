@@ -9,7 +9,7 @@ public class TestUnionImages {
 
 	/**
 	 * @param args
-	 */
+	 
 	public static void main(String[] args) {
 		try {
 			byte[] imagen = FormatUtil.convertJPG("c://cheques/test1.tif", 0);
@@ -24,5 +24,5 @@ public class TestUnionImages {
 		
 
 	}
-
+*/
 }

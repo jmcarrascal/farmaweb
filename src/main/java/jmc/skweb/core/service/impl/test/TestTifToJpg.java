@@ -39,7 +39,7 @@ import com.sun.media.jai.codec.ImageCodec;
 	    fos.close();
 	  }
 
-	  
+	  /*
 	  public static void main(String[] args) throws Exception {
 		  
 		  	byte[] cara = FormatUtil.convertJPG("c:/Cheques/00701010580558725200000183264.tif",0);
@@ -81,6 +81,7 @@ import com.sun.media.jai.codec.ImageCodec;
 				  e.printStackTrace();
 			  }
 			  
-	  }
+			  */
+	  
 	}
 

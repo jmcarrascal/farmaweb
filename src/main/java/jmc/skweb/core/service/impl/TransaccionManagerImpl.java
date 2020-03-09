@@ -1110,8 +1110,15 @@ public class TransaccionManagerImpl implements TransaccionManager {
 	}
 
 	public List<ObraSocial> getObraSocialPorNombre(String filter) {
-		List<ObraSocial> listObraSocial = obraSocialDAO.getListbyQuery("select o from ObraSocial o where nombre like '%" + filter + "%' and activo = -1");
-		return listObraSocial;
+		try {
+			Integer idOs = Integer.parseInt(filter);
+			List<ObraSocial> listObraSocial = obraSocialDAO.getListbyQuery("select o from ObraSocial o where idObraSocial ="+idOs +"  and activo = -1");
+			return listObraSocial;
+		}catch(Exception e) {
+			List<ObraSocial> listObraSocial = obraSocialDAO.getListbyQuery("select o from ObraSocial o where nombre like '%" + filter + "%' and activo = -1");
+			return listObraSocial;
+		}
+		
 	}
 
 	public List<TrazabiFarma> getTrazabiFarmaPorSerie(String filter,

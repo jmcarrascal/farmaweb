@@ -17,18 +17,18 @@ public class SetSchema {
 	/**
 	 * @param args
 	 */
-private String rutaArchivos = "/Users/juanmanuelcarrascal/projects/jmc/farmaweb/src/data/";
+private String rutaArchivos = "/Users/juanmanuelcarrascal/projects/ERP/farmaweb1/farmaweb/src/data/";
 	
 	private String anotacion = "@Table";
 	
 	public static void main(String[] args) {			
 		
 		//Recorrer los archivos
-		String rutaModel = "/Users/juanmanuelcarrascal/projects/jmc/farmaweb/src/main/java/jmc/skweb/core/model/";
-		String empresa = "local.txt";
+		String rutaModel = "/Users/juanmanuelcarrascal/projects/ERP/farmaweb1/farmaweb/src/main/java/jmc/skweb/core/model/";
+//		String empresa = "local.txt";
 //		String empresa = "plasticos.txt";
 //		String empresa = "herramientas.txt";
-//		String empresa = "transacSql.txt";
+		String empresa = "transacSql.txt";
 //		String empresa = "wilde.txt";
 		File repositorio = new File(rutaModel);
 		File[] fileList = repositorio.listFiles();

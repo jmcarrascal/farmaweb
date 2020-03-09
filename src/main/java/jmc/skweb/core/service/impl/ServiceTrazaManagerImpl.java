@@ -214,15 +214,18 @@ public class ServiceTrazaManagerImpl implements ServiceTrazaManager {
 			
 			
 			}catch(Exception e){
+				e.printStackTrace();
 				result.setExito(false);
 				result.setErrores("No se pudo obtener el id_transac_global");				
 			}
 
 		} catch (AxisFault e1) {
+			e1.printStackTrace();
 			result.setExito(false);
 			result.setErrores("No se pudo obtener el id_transac_global");
 			e1.printStackTrace();
 		} catch (RemoteException e) {
+			e.printStackTrace();
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			result.setExito(false);

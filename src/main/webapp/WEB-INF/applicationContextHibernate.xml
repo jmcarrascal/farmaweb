@@ -2,15 +2,13 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
 "http://www.springframework.org/dtd/spring-beans.dtd">
 
-
 <beans>
-    
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass">
-			<value>net.sourceforge.jtds.jdbc.Driver</value>
+			<value>com.mysql.jdbc.Driver</value>
 		</property>
 		<property name="jdbcUrl">
-			<value>jdbc:jtds:sqlserver://192.168.1.248:1433</value>
+			<value>jdbc:mysql://216.155.135.11:3306/?autoReconnect=true</value>
 		</property>
 		<property name="minPoolSize">
 			<value>1</value>
@@ -28,10 +26,10 @@
 			<value>1</value>
 		</property>
 		<property name="user">
-			<value>sa</value>
+			<value>shop</value>
 		</property>
 		<property name="password">
-			<value>oriensak05</value>
+			<value>$Ratablanca%1020</value>
 		</property>
 	</bean>
 

@@ -25,7 +25,7 @@ import javax.persistence.Transient;
  *
  */
 @Entity
-@Table(name = "UsuarioWeb", schema = "ComunSql.dbo")
+@Table(name = "UsuarioWeb", schema = "ComunSql")
 public class UsuarioWeb implements java.io.Serializable {
 
 	private Long idUsuarioWeb;	

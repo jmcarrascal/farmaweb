@@ -15,7 +15,7 @@ public class TestEjecuta {
 		lista.add("004;2;12;121212;1212121212;1212122");
 		lista.add("004;2;12;121212;1212121212;1212122");
 		lista.add("004;2;12;121212;1212121212;1212122");
-		byte[] h = FormatUtil.getFacturasExcel(lista);
+		//byte[] h = FormatUtil.getFacturasExcel(lista);
 	}
 
 }

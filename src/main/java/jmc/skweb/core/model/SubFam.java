@@ -16,7 +16,7 @@ import javax.persistence.Table;
 //@Table(name = "SubFam", schema = "ComunSql.dbo")
 //Simpa Plasticos
 //@Table(name = "SubFam", schema = "ArtPlas.dbo")
-@Table(name = "SubFam", schema = "ComunSql.dbo")
+@Table(name = "SubFam", schema = "ComunSql")
 public class SubFam implements java.io.Serializable {
 
 	private Long nrsubfam;

@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "DondeEstaFactuMail", schema = "ComunSql.dbo")
+@Table(name = "DondeEstaFactuMail", schema = "ComunSql")
 public class DondeEstaFactuMail {
 
 	private Integer nr;

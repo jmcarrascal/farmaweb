@@ -64,7 +64,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "Parametrizacion", schema = "ComunSql.dbo")
+@Table(name = "Parametrizacion", schema = "ComunSql")
 public class Parametrizacion {
 
 	private Long idParametrizacion;

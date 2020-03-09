@@ -5,6 +5,7 @@
 <hibernate-configuration>
     <session-factory name="hibernateDesa">
         <property name="hibernate.connection.driver_class">com.hxtt.sql.access.AccessDriver</property>
+        
         <property name="hibernate.connection.url">jdbc:access:///c:/test_base.mdb</property>
 
         <property name="hibernate.dialect">com.hxtt.support.hibernate.HxttAccessDialect</property>

@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 //@Table(name = "ArtMadre", schema = "ComunSql.dbo")
 //@Table(name = "ArtMadre", schema = "ArtPlas.dbo")
-@Table(name = "ArtMadre", schema = "ComunSql.dbo")
+@Table(name = "ArtMadre", schema = "ComunSql")
 public class ArtMadre implements java.io.Serializable {
 
 	private String codArtMad;
