@@ -1,6 +1,5 @@
 package jmc.skweb.core.service.impl;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -8,23 +7,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import jmc.skweb.core.model.traza.ResultSendMedicamento;
 
-import org.hibernate.criterion.Restrictions;
-
-import com.inssjp.mywebservice.business.SendMedicamentosDocument;
-import com.inssjp.mywebservice.business.SendMedicamentosResponseDocument;
-import com.inssjp.mywebservice.business.WebServiceError;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendMedicamentosE;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendMedicamentosResponseE;
+import com.inssjp.mywebservice.business.IWebServiceStub.WebServiceError;
 
 import jmc.skweb.core.dao.ClieArticPrecioDAO;
 import jmc.skweb.core.dao.DomiciliosDAO;
-import jmc.skweb.core.dao.ExiArtDAO;
-import jmc.skweb.core.dao.FamDAO;
 import jmc.skweb.core.dao.GenericDAO;
 import jmc.skweb.core.dao.GenteDAO;
 import jmc.skweb.core.dao.ItemsDAO;
 import jmc.skweb.core.dao.StockDAO;
-import jmc.skweb.core.dao.SubFamDAO;
 import jmc.skweb.core.dao.TransacDAO;
 import jmc.skweb.core.dao.TrazabiDAO;
 import jmc.skweb.core.dao.TrazabiFarmaDAO;
@@ -32,30 +25,24 @@ import jmc.skweb.core.model.ClieArticPrecio;
 import jmc.skweb.core.model.Domicilios;
 import jmc.skweb.core.model.DondeEstaFactuMail;
 import jmc.skweb.core.model.EmpresaWeb;
-import jmc.skweb.core.model.ExiArt;
-import jmc.skweb.core.model.Existencias;
-import jmc.skweb.core.model.Fam;
 import jmc.skweb.core.model.Gente;
 import jmc.skweb.core.model.Impuestos;
 import jmc.skweb.core.model.Items;
 import jmc.skweb.core.model.Numeraciones;
 import jmc.skweb.core.model.Parametrizacion;
 import jmc.skweb.core.model.Stock;
-import jmc.skweb.core.model.SubFam;
 import jmc.skweb.core.model.TipoComprob;
 import jmc.skweb.core.model.Transac;
 import jmc.skweb.core.model.Usuario;
 import jmc.skweb.core.model.UsuarioWeb;
-import jmc.skweb.core.model.report.SaldoAcumulado;
 import jmc.skweb.core.model.report.TipoReporte;
 import jmc.skweb.core.model.report.TransacJoin;
 import jmc.skweb.core.model.traza.Despachos;
 import jmc.skweb.core.model.traza.ObraSocial;
+import jmc.skweb.core.model.traza.ResultSendMedicamento;
 import jmc.skweb.core.model.traza.Trazabi;
 import jmc.skweb.core.model.traza.TrazabiFarma;
 import jmc.skweb.core.model.traza.report.DatosTrazaWS;
-import jmc.skweb.core.service.ArticuloManager;
-import jmc.skweb.core.service.CuentaCorrienteManager;
 import jmc.skweb.core.service.ServiceTrazaManager;
 import jmc.skweb.core.service.TransaccionManager;
 import jmc.skweb.core.service.UsuarioManager;
@@ -819,12 +806,12 @@ public class TransaccionManagerImpl implements TransaccionManager {
 				trazabiFarma.setProcesoEgreso(false);
 				
 				extendedTrazabiFarmaDAO.save(trazabiFarma);
-				SendMedicamentosDocument sm = null;
-				SendMedicamentosResponseDocument sr = null;
+				SendMedicamentosE sm = null;
+				SendMedicamentosResponseE sr = null;
 				ResultSendMedicamento r = null;
 				if (trazabiFarma.getTrazaObli() == -1){
 					try {					
-							sm = fu.makeSendMedicamentosCompraDocument(trazabiFarma,em.getUsrPami().trim(),em.getPassPami().trim());					
+							//sm = fu.makeSendMedicamentosCompraDocument(trazabiFarma,em.getUsrPami().trim(),em.getPassPami().trim());					
 						//Informar a ANMAT el ingreso de todos los medicamentos
 						try {
 							r = serviceTrazaManager.confifTransac(trazabiFarma.getGtin(), trazabiFarma.getSerieGtin(),em.getUsrPami().trim(),em.getPassPami().trim(), em.getUrlTraza());
@@ -864,27 +851,26 @@ public class TransaccionManagerImpl implements TransaccionManager {
 		return resultFinal;		
 	}
 	
-	private ResultSendMedicamento getResult (SendMedicamentosResponseDocument result){
+	private ResultSendMedicamento getResult (SendMedicamentosResponseE smr){
 		String resultado = "";
 		ResultSendMedicamento r = new ResultSendMedicamento();
-		r.setExito(true);
-		WebServiceError[] wseArray = result.getSendMedicamentosResponse().getReturn().getErroresArray();
-		
-		result.getSendMedicamentosResponse().getReturn().getResultado();
-		
-		for(WebServiceError wse: wseArray){
-			System.out.println(wse.getDError());
-			resultado = resultado + "/" + wse.getDError();
-			r.setExito(false);
-			r.setErrores(resultado);
-		}
-		if (resultado.equals("")){
-			if (result.getSendMedicamentosResponse().getReturn().getCodigoTransaccion() != null && !result.getSendMedicamentosResponse().getReturn().getCodigoTransaccion().equals("")){
-				//Actualizo los valores de CT Compra y CT vta En la Base Mysql.
-				r.setExito(true);
-				r.setTransacNr(result.getSendMedicamentosResponse().getReturn().getCodigoTransaccion());				
+		if (!smr.getSendMedicamentosResponse().get_return().getResultado()) {
+			if (smr.getSendMedicamentosResponse().get_return().getErrores() != null) {
+				WebServiceError[] wseArray = smr.getSendMedicamentosResponse().get_return().getErrores();
+				for (WebServiceError wse : wseArray) {
+					System.out.println(wse.get_d_error());
+					resultado = wse.get_d_error();
+					r.setExito(false);
+					r.setErrores(resultado);
+				}
 			}
-		}		
+		} else {
+			// Actulizo trazabi
+			r.setExito(true);
+			r.setTransacNr(smr.getSendMedicamentosResponse().get_return().getCodigoTransaccion());	
+			System.out.println("Nr Transac Respuesta: "+ smr.getSendMedicamentosResponse().get_return().getCodigoTransaccion());
+		}
+
 		return r;		
 		
 	}
@@ -1006,9 +992,12 @@ public class TransaccionManagerImpl implements TransaccionManager {
 				trazabiFarmaOrig.setObs(datos.getObs());
 				trazabiFarmaOrig.setFechaSalida(new Date(fechaEvento));			
 				extendedTrazabiFarmaDAO.update(trazabiFarmaOrig);
-				SendMedicamentosDocument sm = null;
-				SendMedicamentosResponseDocument sr = null;
+				SendMedicamentosE sm = null;
+				SendMedicamentosResponseE sr = null;
 				ResultSendMedicamento r = null;
+				if (transac.getGente().getGenteNr() ==  3007 || transac.getGente().getGenteNr() == 3950 || transac.getGente().getGenteNr() == 4137){
+					trazabiFarmaOrig.setObserEgr("PROGRAMA");
+				}
 				if (trazabiFarma.getTrazaObli() == -1){
 					try {					
 							sm = fu.makeSendMedicamentosEgresoDocument(trazabiFarmaOrig,em.getUsrPami().trim(),em.getPassPami().trim(), datos);					
@@ -1194,8 +1183,8 @@ public class TransaccionManagerImpl implements TransaccionManager {
 				trazabiFarmaOrig.setObs(datos.getObs());
 				trazabiFarmaOrig.setFechaSalida(new Date(System.currentTimeMillis()));			
 				extendedTrazabiFarmaDAO.update(trazabiFarmaOrig);
-				SendMedicamentosDocument sm = null;
-				SendMedicamentosResponseDocument sr = null;
+				SendMedicamentosE sm = null;
+				SendMedicamentosResponseE sr = null;
 				ResultSendMedicamento r = null;
 				if (trazabiFarma.getTrazaObli() == -1){
 					try {					
@@ -1299,12 +1288,12 @@ public class TransaccionManagerImpl implements TransaccionManager {
 		//trazabiFarma.setProcesoEgreso(false);
 		
 		//extendedTrazabiFarmaDAO.save(trazabiFarma);
-		SendMedicamentosDocument sm = null;
-		SendMedicamentosResponseDocument sr = null;
+		SendMedicamentosE sm = null;
+		SendMedicamentosResponseE sr = null;
 		ResultSendMedicamento r = null;
 		if (trazabiFarma.getTrazaObli() == -1){
 			try {					
-					sm = fu.makeSendMedicamentosDevolucionDocument(trazabiFarma,em.getUsrPami().trim(),em.getPassPami().trim());					
+					//sm = fu.makeSendMedicamentosDevolucionDocument(trazabiFarma,em.getUsrPami().trim(),em.getPassPami().trim());					
 				//Informar a ANMAT el ingreso de todos los medicamentos
 				try {
 					sr = serviceTrazaManager.sendMedicamento(sm,em.getUrlTraza());

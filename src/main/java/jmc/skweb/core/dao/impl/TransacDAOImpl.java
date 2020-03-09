@@ -45,7 +45,7 @@ import jmc.skweb.util.Constants;
 				transacList = getHibernateTemplate().find(sql);
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return transacList;
@@ -76,7 +76,7 @@ import jmc.skweb.util.Constants;
 				transacList = getHibernateTemplate().find(sql);
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return transacList;
@@ -97,7 +97,7 @@ import jmc.skweb.util.Constants;
 				saldo = saldoList.get(0).doubleValue();
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return saldo;
@@ -116,7 +116,7 @@ import jmc.skweb.util.Constants;
 				saldo = saldoList.get(0).doubleValue();
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return saldo;
@@ -133,7 +133,7 @@ import jmc.skweb.util.Constants;
 				transacList = getHibernateTemplate().find(sql);
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return transacList;
@@ -149,7 +149,7 @@ import jmc.skweb.util.Constants;
 				transacList = getHibernateTemplate().find(sql);
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return transacList;
@@ -172,7 +172,7 @@ import jmc.skweb.util.Constants;
 				saldo = saldoList.get(0).doubleValue();
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return saldo;
@@ -198,7 +198,7 @@ import jmc.skweb.util.Constants;
 				transacList = getHibernateTemplate().find(sql);
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return transacList;
@@ -227,7 +227,7 @@ import jmc.skweb.util.Constants;
 				transacList = getHibernateTemplate().find(sql);
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return transacList;
@@ -245,7 +245,7 @@ import jmc.skweb.util.Constants;
 				transacList = getHibernateTemplate().find(sql);
 				System.out.println("la llamada es: " + sql);
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return transacList;
@@ -263,7 +263,7 @@ import jmc.skweb.util.Constants;
 				transacList = getHibernateTemplate().find(sql);
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				e.printStackTrace();
 			}finally{
 				}
 			return transacList;

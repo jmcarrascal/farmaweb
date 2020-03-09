@@ -12,16 +12,16 @@ import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
 
-import com.inssjp.mywebservice.business_.IWebServiceStub;
-import com.inssjp.mywebservice.business_.IWebServiceStub.ConfirmacionTransaccionDTO;
-import com.inssjp.mywebservice.business_.IWebServiceStub.GetTransaccionesNoConfirmadas;
-import com.inssjp.mywebservice.business_.IWebServiceStub.GetTransaccionesNoConfirmadasE;
-import com.inssjp.mywebservice.business_.IWebServiceStub.GetTransaccionesNoConfirmadasResponseE;
-import com.inssjp.mywebservice.business_.IWebServiceStub.SendConfirmaTransacc;
-import com.inssjp.mywebservice.business_.IWebServiceStub.SendConfirmaTransaccE;
-import com.inssjp.mywebservice.business_.IWebServiceStub.SendConfirmaTransaccResponseE;
-import com.inssjp.mywebservice.business_.IWebServiceStub.TransaccionPlainWS;
-import com.inssjp.mywebservice.business_.IWebServiceStub.WebServiceError;
+import com.inssjp.mywebservice.business.IWebServiceStub;
+import com.inssjp.mywebservice.business.IWebServiceStub.ConfirmacionTransaccionDTO;
+import com.inssjp.mywebservice.business.IWebServiceStub.GetTransaccionesNoConfirmadas;
+import com.inssjp.mywebservice.business.IWebServiceStub.GetTransaccionesNoConfirmadasE;
+import com.inssjp.mywebservice.business.IWebServiceStub.GetTransaccionesNoConfirmadasResponseE;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendConfirmaTransacc;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendConfirmaTransaccE;
+import com.inssjp.mywebservice.business.IWebServiceStub.SendConfirmaTransaccResponseE;
+import com.inssjp.mywebservice.business.IWebServiceStub.TransaccionPlainWS;
+import com.inssjp.mywebservice.business.IWebServiceStub.WebServiceError;
 
 
 public class TestSendConfirMedicamento {

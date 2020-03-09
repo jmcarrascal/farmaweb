@@ -523,7 +523,7 @@
 			$("#IdNombrePacienteDIV").focus();
 
 		} else {
-			$("#IdNombrePacienteDIV").hide();
+			$("#IdNombrePacienteDIV").show();
 			$("#IdnroAfiliadoDIV").show();
 			$("#IdnroAfiliadoDIV").focus();
 
@@ -539,7 +539,7 @@
 			$("#IdnroAfiliadoDIV").hide();
 			$("#nroAfiliadoID").val('');
 		} else {
-			$("#IdNombrePacienteDIV").hide();
+			$("#IdNombrePacienteDIV").show();
 			$("#IdnroAfiliadoDIV").show();
 			$("#nombrePacienteID").val('');
 		}
